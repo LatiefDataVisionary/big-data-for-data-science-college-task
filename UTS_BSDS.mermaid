@@ -1,0 +1,110 @@
+flowchart TD
+ subgraph subGraph0[" "]
+    direction LR
+        SOURCES[("1. Data Sources\n📚 Raw Inputs")]
+        INGESTION[("2. Ingestion Layer\n⚡ Streaming")]
+        STORAGE[("3. Storage Layer\n💾 Persistence")]
+        PROCESSING[("4. Processing Layer\n🛠️ Transformation")]
+        ANALYTICS[("5. Analytics Layer\n🧠 Intelligence")]
+        VISUALIZATION[("6. Business Layer\n📈 Value")]
+  end
+ subgraph SOURCES["<b><font size=4>▸ Data Sources ▸</font><b></b></b>"]
+    direction TB
+        S1[("Amazon RDS<br/>Orders DB")]
+        S2[("Apache Kafka<br/>Clickstreams")]
+        S3["🛰️ External APIs<br/>Weather/Holidays"]
+  end
+ subgraph INGESTION["<b><font size=4>▸ Ingestion Layer ▸</font><b></b></b>"]
+    direction TB
+        I1["Kafka<br/>Distributed Logs"]
+        I2["AWS Kinesis<br/>Managed Streams"]
+        I3["Flume<br/>Log Aggregator"]
+  end
+ subgraph STORAGE["<b><font size=4>▸ Storage Layer ▸</font><b></b></b>"]
+    direction TB
+        ST1[("Hadoop HDFS")]
+        ST2["Amazon S3<br/>Data Lake"]
+        ST3[("Snowflake DW")]
+  end
+ subgraph PROCESSING["<b><font size=4>▸ Processing Layer ▸</font><b></b></b>"]
+    direction TB
+        P1["Spark Batch<br/>ETL Pipelines"]
+        P2["Flink Real-Time<br/>Processing"]
+        P3["Airflow<br/>Workflows"]
+  end
+ subgraph ANALYTICS["<b><font size=4>▸ Analytics Layer ▸</font><b></b></b>"]
+    direction TB
+        A1["Feature Store<br/>Version Control"]
+        A2["ML Models<br/>• XGBoost<br/>• LSTM<br/>• Prophet"]
+        A3["Model Registry<br/>A/B Testing"]
+  end
+ subgraph VISUALIZATION["<b><font size=4>▸ Business Layer ▸</font><b></b></b>"]
+    direction TB
+        V1["Tableau<br/>Executive Dashboards"]
+        V2["Alert System<br/>Thresholds"]
+        V3["Auto-Scaling<br/>APIs"]
+  end
+    TITLE@{ label: "<b><font size=\"5\"> Big Data Architecture for Amazon Sales Prediction</font><b></b></b>" } -.-> SOURCES
+    SOURCES --> INGESTION
+    INGESTION --> STORAGE
+    STORAGE --> PROCESSING
+    PROCESSING --> ANALYTICS
+    ANALYTICS --> VISUALIZATION
+    S1 -- "SQL Queries" --> I1
+    S2 --> I1
+    S3 --> I2
+    I1 --> ST1
+    I2 --> ST2
+    I3 --> ST1
+    ST1 --> P1
+    ST2 --> P1
+    ST3 --> P1
+    P1 --> A1
+    P2 --> A2
+    P3 --> A3
+    A1 --> V1
+    A2 --> V1 & V3
+    A3 --> V2
+
+    TITLE@{ shape: circle}
+     SOURCES:::sources
+     INGESTION:::ingestion
+     STORAGE:::storage
+     PROCESSING:::processing
+     ANALYTICS:::analytics
+     VISUALIZATION:::visualization
+     TITLE:::title
+    classDef sources fill:#f9e79f,stroke:#f1c40f,stroke-width:2px
+    classDef ingestion fill:#aed6f1,stroke:#3498db,stroke-width:2px
+    classDef storage fill:#a2d9ce,stroke:#16a085,stroke-width:2px
+    classDef processing fill:#f5b7b1,stroke:#e74c3c,stroke-width:2px
+    classDef analytics fill:#d7bde2,stroke:#9b59b6,stroke-width:2px
+    classDef visualization fill:#fadbd8,stroke:#f5b041,stroke-width:2px
+    classDef arrow stroke:#2c3e50,stroke-width:2px,fill:none
+    classDef title fill:#ffffff,stroke:none,font-size:16px,font-weight:bold
+    style SOURCES fill:#fff9e6,stroke:#f39c12,stroke-width:3px,text-align:center
+    style INGESTION text-align:center
+    style STORAGE text-align:center
+    style PROCESSING text-align:center
+    style ANALYTICS text-align:center
+    style VISUALIZATION fill:#fff5f5,stroke:#e67e22,stroke-width:3px,text-align:center
+    style TITLE fill:#2c3e50,color:white,stroke:#34495e,stroke-width:3px
+    linkStyle 0 stroke:#2c3e50,stroke-width:2.5px,fill:none
+    linkStyle 1 stroke:#2c3e50,stroke-width:2.5px,fill:none
+    linkStyle 2 stroke:#2c3e50,stroke-width:2.5px,fill:none
+    linkStyle 3 stroke:#2c3e50,stroke-width:2.5px,fill:none
+    linkStyle 4 stroke:#2c3e50,stroke-width:2.5px,fill:none
+    linkStyle 5 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 6 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 7 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 8 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 9 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 10 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 11 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 12 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 13 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 14 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 15 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+    linkStyle 16 stroke:#7f8c8d,stroke-width:1.8px,font-size:12px,fill:none
+
+
