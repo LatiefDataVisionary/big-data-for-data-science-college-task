@@ -1,27 +1,55 @@
-graph TD
-    %% Define Node Shapes and Styles
-    classDef default fill:#f9f,stroke:#333,stroke-width:2px,color:#333;
-    classDef datasource fill:#add8e6,stroke:#00008b,stroke-width:2px;
-    classDef storage fill:#90ee90,stroke:#006400,stroke-width:2px;
-    classDef processing fill:#fffacd,stroke:#ffd700,stroke-width:2px;
-    classDef modeling fill:#ffb6c1,stroke:#dc143c,stroke-width:2px;
-    classDef analysis fill:#dda0dd,stroke:#800080,stroke-width:2px;
+graph LR
+    %% ---- Global Style Definitions (Lebih Profesional & Modern) ----
+    classDef datasource fill:#007bff,stroke:#0056b3,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    classDef storage fill:#28a745,stroke:#1e7e34,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    classDef processing fill:#ffc107,stroke:#cca100,stroke-width:2px,color:#212529,font-weight:bold,border-radius:8px,padding:10px;
+    classDef featureEng fill:#fd7e14,stroke:#c66410,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    classDef splitting fill:#6f42c1,stroke:#59359a,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    classDef training fill:#d63384,stroke:#a32867,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    classDef evaluation fill:#0dcaf0,stroke:#0aa3bf,stroke-width:2px,color:#212529,font-weight:bold,border-radius:8px,padding:10px;
+    classDef visualization fill:#198754,stroke:#13653f,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    classDef insights fill:#6610f2,stroke:#520dc2,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
 
-    %% Nodes and Connections
-    A[<b>Data Source</b><br/>NYC Taxi CSV<br/>(Kaggle)] --> B(<b>Data Ingestion</b><br/>Python Script<br/>Pandas read_csv);
-    B --> C((<b>Data Storage</b><br/>Local Disk<br/><i>Simulasi HDFS</i>));
-    C --> D(<b>Data Preprocessing</b><br/>Python: Pandas, NumPy<br/>- Cleaning<br/>- Transformation);
-    D --> E(<b>Feature Engineering</b><br/>Python: Pandas<br/>- Create trip_duration<br/>- Time Features);
-    E --> F{<b>Data Splitting</b><br/>Train & Test Sets<br/>Scikit-learn};
-    F -- Training Data --> G[<b>Model Training</b><br/>Random Forest Regressor<br/>Scikit-learn];
-    F -- Test Data --> H;
-    G --> H(<b>Model Evaluation</b><br/>MSE, RMSE, R-squared<br/>Scikit-learn);
-    H --> I[<b>Result Visualization</b><br/>Matplotlib, Seaborn<br/>- Predictions vs Actual<br/>- Feature Importance];
-    I --> J((<b>Analysis & Insights</b><br/>Interpretasi Hasil<br/>Wawasan Bisnis));
+    %% ---- Subgraph untuk Tahapan Utama (Flow Horizontal) ----
 
-    %% Apply Styles
-    class A datasource;
-    class B,D,E processing;
-    class C storage;
-    class F,G,H modeling;
-    class I,J analysis;
+    subgraph "Phase 1: Acquisition & Storage"
+        direction LR
+        A["💾<br/><b>Data Source</b><br/>NYC Taxi CSV"]:::datasource
+        B["📥<br/><b>Data Ingestion</b><br/>Python, Pandas"]:::processing
+        C["🗄️<br/><b>Data Storage</b><br/>Local (Sim. HDFS)"]:::storage
+        A --> B --> C
+    end
+
+    subgraph "Phase 2: Data Preparation"
+        direction LR
+        D["🧹<br/><b>Preprocessing</b><br/>Clean, Transform"]:::processing
+        E["✨<br/><b>Feature Eng.</b><br/>Create Features"]:::featureEng
+        C ~.-> D %% Mengindikasikan aliran data, tapi bukan proses sekuensial ketat dalam satu baris
+    end
+
+    subgraph "Phase 3: Modeling & Evaluation"
+        direction LR
+        F{"➗<br/><b>Data Splitting</b><br/>Train & Test"}:::splitting
+        G["🧠<br/><b>Model Training</b><br/>Random Forest"]:::training
+        H["✅<br/><b>Model Evaluation</b><br/>Metrics (MSE, R²)"]:::evaluation
+        E ~.-> F
+        F -- Training Data --> G
+        G -.-> H %% Panah putus-putus untuk hasil model ke evaluasi
+        F -- Test Data --> H
+    end
+
+    subgraph "Phase 4: Results & Interpretation"
+        direction LR
+        I["📊<br/><b>Visualization</b><br/>Charts & Plots"]:::visualization
+        J["💡<br/><b>Analysis & Insights</b><br/>Interpretasi Hasil"]:::insights
+        H ~.-> I --> J
+    end
+
+    %% ---- Menghubungkan Antar Subgraph ----
+    %% Mermaid tidak secara eksplisit menghubungkan subgraph, tapi aliran node antar subgraph sudah jelas
+    %% Jika perlu visualisasi panah antar 'phase', kita bisa pakai invisible node atau koneksi antar node ujungnya
+    %% Untuk menjaga kesederhanaan, biarkan koneksi node C ke D, E ke F, H ke I yang menyebrangi subgraph
+
+    %% Apply Link Styles (jika diinginkan untuk mempertegas)
+    linkStyle default stroke:#555,stroke-width:2px;
+    linkStyle 0 stroke-dasharray: 5 5; %% Contoh style untuk panah tertentu jika tahu indeksnya
