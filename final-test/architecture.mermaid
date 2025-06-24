@@ -1,23 +1,23 @@
 graph TD
     %% Define Node Shapes and Styles
     classDef default fill:#f9f,stroke:#333,stroke-width:2px,color:#333;
-    classDef datasource fill:#add8e6,stroke:#00008b,stroke-width:2px; %% Light blue, dark blue border
-    classDef storage fill:#90ee90,stroke:#006400,stroke-width:2px; %% Light green, dark green border
-    classDef processing fill:#fffacd,stroke:#ffd700,stroke-width:2px; %% Lemon chiffon, gold border
-    classDef modeling fill:#ffb6c1,stroke:#dc143c,stroke-width:2px; %% Light pink, crimson border
-    classDef analysis fill:#dda0dd,stroke:#800080,stroke-width:2px; %% Plum, purple border
+    classDef datasource fill:#add8e6,stroke:#00008b,stroke-width:2px;
+    classDef storage fill:#90ee90,stroke:#006400,stroke-width:2px;
+    classDef processing fill:#fffacd,stroke:#ffd700,stroke-width:2px;
+    classDef modeling fill:#ffb6c1,stroke:#dc143c,stroke-width:2px;
+    classDef analysis fill:#dda0dd,stroke:#800080,stroke-width:2px;
 
     %% Nodes and Connections
-    A[<b>Data Source</b><br/>NYC Taxi Trip CSV<br/>(Kaggle API / Download)] --> B(<b>Data Ingestion</b><br/>Python Script<br/>Pandas `read_csv`);
-    B --> C((<b>Data Storage</b><br/>Local Disk<br/><i>(Simulasi HDFS / Data Lake)</i>));
+    A[<b>Data Source</b><br/>NYC Taxi CSV<br/>(Kaggle)] --> B(<b>Data Ingestion</b><br/>Python Script<br/>Pandas read_csv);
+    B --> C((<b>Data Storage</b><br/>Local Disk<br/><i>Simulasi HDFS</i>));
     C --> D(<b>Data Preprocessing</b><br/>Python: Pandas, NumPy<br/>- Cleaning<br/>- Transformation);
-    D --> E(<b>Feature Engineering</b><br/>Python: Pandas<br/>- Create `trip_duration`<br/>- Time Features);
+    D --> E(<b>Feature Engineering</b><br/>Python: Pandas<br/>- Create trip_duration<br/>- Time Features);
     E --> F{<b>Data Splitting</b><br/>Train & Test Sets<br/>Scikit-learn};
     F -- Training Data --> G[<b>Model Training</b><br/>Random Forest Regressor<br/>Scikit-learn];
     F -- Test Data --> H;
     G --> H(<b>Model Evaluation</b><br/>MSE, RMSE, R-squared<br/>Scikit-learn);
     H --> I[<b>Result Visualization</b><br/>Matplotlib, Seaborn<br/>- Predictions vs Actual<br/>- Feature Importance];
-    I --> J((<b>Analysis & Insights</b><br/>Interpretasi Hasil<br/>Pengambilan Keputusan));
+    I --> J((<b>Analysis & Insights</b><br/>Interpretasi Hasil<br/>Wawasan Bisnis));
 
     %% Apply Styles
     class A datasource;
