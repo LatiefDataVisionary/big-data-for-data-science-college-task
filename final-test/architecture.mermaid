@@ -1,81 +1,100 @@
 graph LR
     %% ======================================================================
-    %% Global Style Definitions
+    %% TITLE & GLOBAL SETTINGS
     %% ======================================================================
-    %% -- Node & Text Styling --
+    classDef titleStyle fill:transparent,stroke:transparent,font-size:24px,font-weight:bold;
     classDef default fill:#FFFFFF,stroke:#424242,stroke-width:2px,color:#212121;
-    classDef nodeTitle font-size:16px,font-weight:bold,fill:transparent,stroke:none;
-    classDef nodeDetail color:#616161,font-size:12px;
-    classDef nodeIcon font-size:28px;
-
-    %% -- Phase-Specific Node Colors --
-    classDef dsNode fill:#E3F2FD,stroke:#1E88E5;
-    classDef ingestNode fill:#E8F5E9,stroke:#43A047;
-    classDef storeNode fill:#FFF3E0,stroke:#FB8C00;
-    classDef preprocessNode fill:#FCE4EC,stroke:#D81B60;
-    classDef featureNode fill:#F3E5F5,stroke:#8E24AA;
-    classDef splitNode fill:#E0F2F1,stroke:#00897B;
-    classDef trainNode fill:#FFFDE7,stroke:#FDD835;
-    classDef evalNode fill:#E1F5FE,stroke:#039BE5;
-    classDef vizNode fill:#F9FBE7,stroke:#C0CA33;
-    classDef insightNode fill:#EDE7F6,stroke:#5E35B1;
+    classDef arrowStyle fill:transparent,stroke:transparent,font-size:20px;
 
     %% ======================================================================
-    %% Phase 1: Data Acquisition & Storage
+    %% PHASE-SPECIFIC STYLES
     %% ======================================================================
-    subgraph "Phase 1: Data Acquisition & Storage"
+    classDef dsNode fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px;
+    classDef ingestNode fill:#E8F5E9,stroke:#43A047,stroke-width:2px;
+    classDef storeNode fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px;
+    classDef preprocessNode fill:#FCE4EC,stroke:#D81B60,stroke-width:2px;
+    classDef featureNode fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px;
+    classDef splitNode fill:#E0F2F1,stroke:#00897B,stroke-width:2px;
+    classDef trainNode fill:#FFFDE7,stroke:#FDD835,stroke-width:2px;
+    classDef evalNode fill:#E1F5FE,stroke:#039BE5,stroke-width:2px;
+    classDef vizNode fill:#F9FBE7,stroke:#C0CA33,stroke-width:2px;
+    classDef insightNode fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px;
+    classDef phaseBox stroke:#B0BEC5,stroke-width:2px,fill:transparent;
+
+    T["NYC Taxi Trip Duration Prediction Pipeline"]:::titleStyle
+
+    %% ======================================================================
+    %% PHASE 1: DATA ACQUISITION & STORAGE (TOP-LEFT)
+    %% ======================================================================
+    subgraph P1["Phase 1: Data Acquisition & Storage"]
         direction LR
-        A["<div class='nodeIcon'>💾</div><div class='nodeTitle'>DATA SOURCE</div><div class='nodeDetail'>NYC Taxi CSV (Kaggle)</div>"]:::dsNode;
-        B["<div class='nodeIcon'>📥</div><div class='nodeTitle'>DATA INGESTION</div><div class='nodeDetail'>Python, Pandas `read_csv`</div>"]:::ingestNode;
-        C["<div class='nodeIcon'>🗄️</div><div class='nodeTitle'>DATA STORAGE</div><div class='nodeDetail'>Local Disk (Sim. HDFS)</div>"]:::storeNode;
+        A["<div style='font-size:28px'>💾</div><b>DATA SOURCE</b><br/><span style='font-size:12px;color:#616161'>NYC Taxi CSV (Kaggle)</span>"]:::dsNode;
+        B["<div style='font-size:28px'>📥</div><b>DATA INGESTION</b><br/><span style='font-size:12px;color:#616161'>Python, Pandas read_csv</span>"]:::ingestNode;
+        C["<div style='font-size:28px'>🗄️</div><b>DATA STORAGE</b><br/><span style='font-size:12px;color:#616161'>Local Disk (Sim. HDFS)</span>"]:::storeNode;
+        A --> B --> C
     end
 
     %% ======================================================================
-    %% Phase 2: Data Preparation
+    %% PHASE 2: DATA PREPARATION (TOP-RIGHT)
     %% ======================================================================
-    subgraph "Phase 2: Data Preparation"
+    subgraph P2["Phase 2: Data Preparation"]
         direction LR
-        D["<div class='nodeIcon'>🧹</div><div class='nodeTitle'>PREPROCESSING</div><div class='nodeDetail'>Cleaning & Transformation</div>"]:::preprocessNode;
-        E["<div class='nodeIcon'>✨</div><div class='nodeTitle'>FEATURE ENGINEERING</div><div class='nodeDetail'>`trip_duration`, Time Features</div>"]:::featureNode;
+        D["<div style='font-size:28px'>🧹</div><b>PREPROCESSING</b><br/><span style='font-size:12px;color:#616161'>Cleaning & Transformation</span>"]:::preprocessNode;
+        E["<div style='font-size:28px'>✨</div><b>FEATURE ENGINEERING</b><br/><span style='font-size:12px;color:#616161'>trip_duration, Time Features</span>"]:::featureNode;
+        D --> E
     end
 
     %% ======================================================================
-    %% Phase 3: Model Development & Assessment
+    %% PHASE 3: MODEL DEVELOPMENT (BOTTOM-LEFT)
     %% ======================================================================
-    subgraph "Phase 3: Model Development"
-        direction LR
-        F{"<div class='nodeIcon'>➗</div><div class='nodeTitle'>DATA SPLITTING</div><div class='nodeDetail'>Train/Test Sets (80/20)</div>"}:::splitNode;
-        G["<div class='nodeIcon'>🧠</div><div class='nodeTitle'>MODEL TRAINING</div><div class='nodeDetail'>Random Forest Regressor</div>"]:::trainNode;
-        H["<div class='nodeIcon'>✅</div><div class='nodeTitle'>MODEL EVALUATION</div><div class='nodeDetail'>Metrics: MSE, RMSE, R²</div>"]:::evalNode;
+    subgraph P3["Phase 3: Model Development & Assessment"]
+        direction TB
+        F["<div style='font-size:28px'>➗</div><b>DATA SPLITTING</b><br/><span style='font-size:12px;color:#616161'>Train/Test Sets (80/20)</span>"]:::splitNode;
+        G["<div style='font-size:28px'>🧠</div><b>MODEL TRAINING</b><br/><span style='font-size:12px;color:#616161'>Random Forest Regressor</span>"]:::trainNode;
+        H["<div style='font-size:28px'>✅</div><b>MODEL EVALUATION</b><br/><span style='font-size:12px;color:#616161'>MSE, RMSE, R² Metrics</span>"]:::evalNode;
+        F --> G --> H
+        F -.-> H
     end
 
     %% ======================================================================
-    %% Phase 4: Insights & Visualization
+    %% PHASE 4: INSIGHTS & VISUALIZATION (BOTTOM-RIGHT)
     %% ======================================================================
-    subgraph "Phase 4: Insights & Visualization"
+    subgraph P4["Phase 4: Insights & Visualization"]
         direction LR
-        I["<div class='nodeIcon'>📊</div><div class='nodeTitle'>VISUALIZATION</div><div class='nodeDetail'>Feature Importance, Predictions vs Actuals</div>"]:::vizNode;
-        J["<div class='nodeIcon'>💡</div><div class='nodeTitle'>ANALYSIS & INSIGHTS</div><div class='nodeDetail'>Key Drivers of Trip Duration</div>"]:::insightNode;
+        I["<div style='font-size:28px'>📊</div><b>VISUALIZATION</b><br/><span style='font-size:12px;color:#616161'>Feature Importance, Pred vs Actual</span>"]:::vizNode;
+        J["<div style='font-size:28px'>💡</div><b>ANALYSIS & INSIGHTS</b><br/><span style='font-size:12px;color:#616161'>Key Trip Duration Drivers</span>"]:::insightNode;
+        I --> J
     end
 
     %% ======================================================================
-    %% Workflow Connections (REVISED FOR COMPATIBILITY)
+    %% FINAL OUTPUT (BOTTOM CENTER)
     %% ======================================================================
-    A -- "Read" ==> B;
-    B -- "Save" ==> C;
-    C -- "Load Raw Data" ==> D;
-    D -- "Cleaned Data" ==> E;
-    E -- "Engineered Features" ==> F;
+    K["<div style='font-size:28px'>🚀</div><b>DEPLOYABLE MODEL</b><br/><span style='font-size:12px;color:#616161'>Production-ready Solution</span>"]:::insightNode
+
+    %% ======================================================================
+    %% COMPACT RECTANGULAR WORKFLOW CONNECTIONS
+    %% ======================================================================
+    %% Horizontal top flow
+    T --> P1
+    P1 -->|"Processed Data"| P2
     
-    F -- "Train Data" ==> G;
-    F -. "Test Data" .-> H; %% Dotted line remains for secondary flow
-    G -- "Trained Model" ==> H;
+    %% Vertical right flow
+    P2 -->|"Engineered Features"| P4
     
-    H -- "Evaluation Results" ==> I;
-    I -- "Generate Insights" ==> J;
+    %% Horizontal bottom flow
+    P4 -->|"Visual Insights"| K
+    K -->|"Deployment"| P3
+    
+    %% Vertical left flow
+    P3 -->|"Evaluation Results"| P1
+
+    %% Cross connections
+    P1 -->|"Raw Data"| P3
+    P2 -->|"Cleaned Data"| P4
 
     %% ======================================================================
-    %% Global Link Styling
+    %% STYLING & LAYOUT OPTIMIZATION
     %% ======================================================================
+    class P1,P2,P3,P4 phaseBox
     linkStyle default stroke:#616161,stroke-width:2px;
-    linkStyle 6 stroke-dasharray: 5 5, stroke:#00897B, stroke-width:2px; %% Style for dotted link
+    linkStyle 5 stroke:#00897B,stroke-width:2px,stroke-dasharray:5 5;
