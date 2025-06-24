@@ -1,89 +1,81 @@
 graph LR
     %% ======================================================================
-    %% Global Style Definitions - More Robust & Customizable
+    %% Global Style Definitions
     %% ======================================================================
-    classDef defaultNode fill:#ECEFF1,stroke:#607D8B,stroke-width:2px,color:#37474F,border-radius:8px,padding:10px,font-family:Arial;
-    %% classDef titleText font-size:16px,font-weight:bold,fill:transparent,stroke:none; %% For separate title nodes (REMOVED FOR DEBUGGING)
+    %% -- Node & Text Styling --
+    classDef default fill:#FFFFFF,stroke:#424242,stroke-width:2px,color:#212121;
+    classDef nodeTitle font-size:16px,font-weight:bold,fill:transparent,stroke:none;
+    classDef nodeDetail color:#616161,font-size:12px;
+    classDef nodeIcon font-size:28px;
 
-    classDef phaseBox fill:#FAFAFA,stroke:#BDBDBD,stroke-width:1.5px,rx:10,ry:10; %% For subgraph styling
-
-    classDef iconText color:#263238,font-size:14px;
-    classDef detailText color:#546E7A,font-size:12px;
-
-    classDef dsNode fill:#E3F2FD,stroke:#2196F3,color:#1976D2;       %% Datasource: Light Blue
-    classDef ingestNode fill:#E8F5E9,stroke:#4CAF50,color:#388E3C;   %% Ingestion: Light Green
-    classDef storeNode fill:#FFF3E0,stroke:#FF9800,color:#F57C00;    %% Storage: Light Orange
-    classDef preprocessNode fill:#FCE4EC,stroke:#E91E63,color:#C2185B; %% Preprocessing: Light Pink
-    classDef featureNode fill:#F3E5F5,stroke:#9C27B0,color:#7B1FA2;    %% Feature Eng: Light Purple
-    classDef splitNode fill:#E0F2F1,stroke:#009688,color:#00796B;     %% Splitting: Light Teal
-    classDef trainNode fill:#FFFDE7,stroke:#FFEB3B,color:#FBC02D;    %% Training: Light Yellow
-    classDef evalNode fill:#E1F5FE,stroke:#03A9F4,color:#0288D1;     %% Evaluation: Light Cyan
-    classDef vizNode fill:#F9FBE7,stroke:#CDDC39,color:#AFB42B;      %% Visualization: Light Lime
-    classDef insightNode fill:#EDE7F6,stroke:#673AB7,color:#512DA8;  %% Insights: Deep Purple
+    %% -- Phase-Specific Node Colors --
+    classDef dsNode fill:#E3F2FD,stroke:#1E88E5;
+    classDef ingestNode fill:#E8F5E9,stroke:#43A047;
+    classDef storeNode fill:#FFF3E0,stroke:#FB8C00;
+    classDef preprocessNode fill:#FCE4EC,stroke:#D81B60;
+    classDef featureNode fill:#F3E5F5,stroke:#8E24AA;
+    classDef splitNode fill:#E0F2F1,stroke:#00897B;
+    classDef trainNode fill:#FFFDE7,stroke:#FDD835;
+    classDef evalNode fill:#E1F5FE,stroke:#039BE5;
+    classDef vizNode fill:#F9FBE7,stroke:#C0CA33;
+    classDef insightNode fill:#EDE7F6,stroke:#5E35B1;
 
     %% ======================================================================
-    %% Phase 1: Data Acquisition & Initial Storage
+    %% Phase 1: Data Acquisition & Storage
     %% ======================================================================
-    subgraph phase1 [ ]
-        style phase1 fill:#F1F8E9,stroke:#AED581,stroke-width:2px,rx:10,ry:10 %% Custom subgraph style
-
-        A["<div style='font-size:24px;'>💾</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA SOURCE</div><div style='font-size:12px; color:#555;'>NYC Taxi CSV (Kaggle)</div>"]:::dsNode;
-        B["<div style='font-size:24px;'>📥</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA INGESTION</div><div style='font-size:12px; color:#555;'>Python, Pandas `read_csv`</div>"]:::ingestNode;
-        C["<div style='font-size:24px;'>🗄️</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA STORAGE</div><div style='font-size:12px; color:#555;'>Local Disk (Sim. HDFS)</div>"]:::storeNode;
-
-        A --o B; 
-        B --x C; 
+    subgraph "Phase 1: Data Acquisition & Storage"
+        direction LR
+        A["<div class='nodeIcon'>💾</div><div class='nodeTitle'>DATA SOURCE</div><div class='nodeDetail'>NYC Taxi CSV (Kaggle)</div>"]:::dsNode;
+        B["<div class='nodeIcon'>📥</div><div class='nodeTitle'>DATA INGESTION</div><div class='nodeDetail'>Python, Pandas `read_csv`</div>"]:::ingestNode;
+        C["<div class='nodeIcon'>🗄️</div><div class='nodeTitle'>DATA STORAGE</div><div class='nodeDetail'>Local Disk (Sim. HDFS)</div>"]:::storeNode;
     end
 
-
     %% ======================================================================
-    %% Phase 2: Data Cleansing & Feature Creation
+    %% Phase 2: Data Preparation
     %% ======================================================================
-    subgraph phase2 [ ]
-        style phase2 fill:#FFF8E1,stroke:#FFD180,stroke-width:2px,rx:10,ry:10
-
-        D["<div style='font-size:24px;'>🧹</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>PREPROCESSING</div><div style='font-size:12px; color:#555;'>Cleaning, Transformation</div>"]:::preprocessNode;
-        E["<div style='font-size:24px;'>✨</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>FEATURE ENGINEERING</div><div style='font-size:12px; color:#555;'>`trip_duration`, Time Features</div>"]:::featureNode;
-
-        D ==> E; 
+    subgraph "Phase 2: Data Preparation"
+        direction LR
+        D["<div class='nodeIcon'>🧹</div><div class='nodeTitle'>PREPROCESSING</div><div class='nodeDetail'>Cleaning & Transformation</div>"]:::preprocessNode;
+        E["<div class='nodeIcon'>✨</div><div class='nodeTitle'>FEATURE ENGINEERING</div><div class='nodeDetail'>`trip_duration`, Time Features</div>"]:::featureNode;
     end
 
     %% ======================================================================
     %% Phase 3: Model Development & Assessment
     %% ======================================================================
-    subgraph phase3 [ ]
-        style phase3 fill:#E3F2FD,stroke:#90CAF9,stroke-width:2px,rx:10,ry:10
-
-        F{"<div style='font-size:24px;'>➗</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA SPLITTING</div><div style='font-size:12px; color:#555;'>Train/Test Sets</div>"}:::splitNode;
-        G["<div style='font-size:24px;'>🧠</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL TRAINING</div><div style='font-size:12px; color:#555;'>Random Forest</div>"]:::trainNode;
-        H["<div style'font-size:24px;'>✅</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL EVALUATION</div><div style='font-size:12px; color:#555;'>MSE, RMSE, R²</div>"]:::evalNode;
-
-        F -- "Train Data" --> G;
-        F -. "Test Data" .-> H; 
-        G -- "Approval?" --- H;  
+    subgraph "Phase 3: Model Development"
+        direction LR
+        F{"<div class='nodeIcon'>➗</div><div class='nodeTitle'>DATA SPLITTING</div><div class='nodeDetail'>Train/Test Sets (80/20)</div>"}:::splitNode;
+        G["<div class='nodeIcon'>🧠</div><div class='nodeTitle'>MODEL TRAINING</div><div class='nodeDetail'>Random Forest Regressor</div>"]:::trainNode;
+        H["<div class='nodeIcon'>✅</div><div class='nodeTitle'>MODEL EVALUATION</div><div class='nodeDetail'>Metrics: MSE, RMSE, R²</div>"]:::evalNode;
     end
 
     %% ======================================================================
-    %% Phase 4: Outcome Visualization & Knowledge Extraction
+    %% Phase 4: Insights & Visualization
     %% ======================================================================
-    subgraph phase4 [ ]
-        style phase4 fill:#FCE4EC,stroke:#F8BBD0,stroke-width:2px,rx:10,ry:10
-
-        I["<div style='font-size:24px;'>📊</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>VISUALIZATION</div><div style='font-size:12px; color:#555;'>Charts, Plots</div>"]:::vizNode;
-        J["<div style='font-size:24px;'>💡</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>ANALYSIS & INSIGHTS</div><div style='font-size:12px; color:#555;'>Interpretation</div>"]:::insightNode;
-
-        I .-> J; 
+    subgraph "Phase 4: Insights & Visualization"
+        direction LR
+        I["<div class='nodeIcon'>📊</div><div class='nodeTitle'>VISUALIZATION</div><div class='nodeDetail'>Feature Importance, Predictions vs Actuals</div>"]:::vizNode;
+        J["<div class='nodeIcon'>💡</div><div class='nodeTitle'>ANALYSIS & INSIGHTS</div><div class='nodeDetail'>Key Drivers of Trip Duration</div>"]:::insightNode;
     end
 
     %% ======================================================================
-    %% Inter-Phase Connections (Clearer Separation)
+    %% Workflow Connections
     %% ======================================================================
-    C ~~~ D;  
-    E ==> F;  
-    H ==> I;  
+    A -- "Read" --> B;
+    B -- "Save" --> C;
+    C -- "Load Raw Data" ==> D;
+    D -- "Cleaned Data" --> E;
+    E -- "Engineered Features" ==> F;
+    
+    F -- "Train Data" --> G;
+    F -. "Test Data" .-> H;
+    G -- "Trained Model" --> H;
+    
+    H -- "Evaluation Results" ==> I;
+    I -- "Generate Insights" --> J;
 
-
     %% ======================================================================
-    %% Optional: Global Link Styling
+    %% Global Link Styling
     %% ======================================================================
-    linkStyle default stroke:#757575,stroke-width:1.5px,color:blue;
+    linkStyle default stroke:#616161,stroke-width:2px;
+    linkStyle 5,6,7 stroke-dasharray: 5 5, stroke:#00897B; %% Dashed link for test data
