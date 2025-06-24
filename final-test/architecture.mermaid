@@ -1,55 +1,92 @@
 graph LR
-    %% ---- Global Style Definitions (Lebih Profesional & Modern) ----
-    classDef datasource fill:#007bff,stroke:#0056b3,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
-    classDef storage fill:#28a745,stroke:#1e7e34,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
-    classDef processing fill:#ffc107,stroke:#cca100,stroke-width:2px,color:#212529,font-weight:bold,border-radius:8px,padding:10px;
-    classDef featureEng fill:#fd7e14,stroke:#c66410,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
-    classDef splitting fill:#6f42c1,stroke:#59359a,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
-    classDef training fill:#d63384,stroke:#a32867,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
-    classDef evaluation fill:#0dcaf0,stroke:#0aa3bf,stroke-width:2px,color:#212529,font-weight:bold,border-radius:8px,padding:10px;
-    classDef visualization fill:#198754,stroke:#13653f,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
-    classDef insights fill:#6610f2,stroke:#520dc2,stroke-width:2px,color:white,font-weight:bold,border-radius:8px,padding:10px;
+    %% ======================================================================
+    %% Global Style Definitions - More Robust & Customizable
+    %% ======================================================================
+    classDef defaultNode fill:#ECEFF1,stroke:#607D8B,stroke-width:2px,color:#37474F,border-radius:8px,padding:10px,font-family:Arial;
+    classDef titleText font-size:16px,font-weight:bold,fill:transparent,stroke:none; %% For separate title nodes
 
-    %% ---- Subgraph untuk Tahapan Utama (Flow Horizontal) ----
+    classDef phaseBox fill:#FAFAFA,stroke:#BDBDBD,stroke-width:1.5px,rx:10,ry:10; %% For subgraph styling
 
-    subgraph "Phase 1: Acquisition & Storage"
-        direction LR
-        A["💾<br/><b>Data Source</b><br/>NYC Taxi CSV"]:::datasource
-        B["📥<br/><b>Data Ingestion</b><br/>Python, Pandas"]:::processing
-        C["🗄️<br/><b>Data Storage</b><br/>Local (Sim. HDFS)"]:::storage
-        A --> B --> C
+    classDef iconText color:#263238,font-size:14px;
+    classDef detailText color:#546E7A,font-size:12px;
+
+    classDef dsNode fill:#E3F2FD,stroke:#2196F3,color:#1976D2;       %% Datasource: Light Blue
+    classDef ingestNode fill:#E8F5E9,stroke:#4CAF50,color:#388E3C;   %% Ingestion: Light Green
+    classDef storeNode fill:#FFF3E0,stroke:#FF9800,color:#F57C00;    %% Storage: Light Orange
+    classDef preprocessNode fill:#FCE4EC,stroke:#E91E63,color:#C2185B; %% Preprocessing: Light Pink
+    classDef featureNode fill:#F3E5F5,stroke:#9C27B0,color:#7B1FA2;    %% Feature Eng: Light Purple
+    classDef splitNode fill:#E0F2F1,stroke:#009688,color:#00796B;     %% Splitting: Light Teal
+    classDef trainNode fill:#FFFDE7,stroke:#FFEB3B,color:#FBC02D;    %% Training: Light Yellow
+    classDef evalNode fill:#E1F5FE,stroke:#03A9F4,color:#0288D1;     %% Evaluation: Light Cyan
+    classDef vizNode fill:#F9FBE7,stroke:#CDDC39,color:#AFB42B;      %% Visualization: Light Lime
+    classDef insightNode fill:#EDE7F6,stroke:#673AB7,color:#512DA8;  %% Insights: Deep Purple
+
+    %% ======================================================================
+    %% Phase 1: Data Acquisition & Initial Storage
+    %% ======================================================================
+    subgraph phase1 [ ]
+        style phase1 fill:#F1F8E9,stroke:#AED581,stroke-width:2px,rx:10,ry:10 %% Custom subgraph style
+
+        A["<div style='font-size:24px;'>💾</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA SOURCE</div><div style='font-size:12px; color:#555;'>NYC Taxi CSV (Kaggle)</div>"]:::dsNode;
+        B["<div style='font-size:24px;'>📥</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA INGESTION</div><div style='font-size:12px; color:#555;'>Python, Pandas `read_csv`</div>"]:::ingestNode;
+        C["<div style='font-size:24px;'>🗄️</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA STORAGE</div><div style='font-size:12px; color:#555;'>Local Disk (Sim. HDFS)</div>"]:::storeNode;
+
+        A --o B; %% Connection with small circle
+        B --x C; %% Connection with cross
     end
 
-    subgraph "Phase 2: Data Preparation"
-        direction LR
-        D["🧹<br/><b>Preprocessing</b><br/>Clean, Transform"]:::processing
-        E["✨<br/><b>Feature Eng.</b><br/>Create Features"]:::featureEng
-        C ~.-> D %% Mengindikasikan aliran data, tapi bukan proses sekuensial ketat dalam satu baris
+
+    %% ======================================================================
+    %% Phase 2: Data Cleansing & Feature Creation
+    %% ======================================================================
+    subgraph phase2 [ ]
+        style phase2 fill:#FFF8E1,stroke:#FFD180,stroke-width:2px,rx:10,ry:10
+
+        D["<div style='font-size:24px;'>🧹</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>PREPROCESSING</div><div style='font-size:12px; color:#555;'>Cleaning, Transformation</div>"]:::preprocessNode;
+        E["<div style='font-size:24px;'>✨</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>FEATURE ENGINEERING</div><div style='font-size:12px; color:#555;'>`trip_duration`, Time Features</div>"]:::featureNode;
+
+        D ==> E; %% Thick arrow connection
     end
 
-    subgraph "Phase 3: Modeling & Evaluation"
-        direction LR
-        F{"➗<br/><b>Data Splitting</b><br/>Train & Test"}:::splitting
-        G["🧠<br/><b>Model Training</b><br/>Random Forest"]:::training
-        H["✅<br/><b>Model Evaluation</b><br/>Metrics (MSE, R²)"]:::evaluation
-        E ~.-> F
-        F -- Training Data --> G
-        G -.-> H %% Panah putus-putus untuk hasil model ke evaluasi
-        F -- Test Data --> H
+    %% ======================================================================
+    %% Phase 3: Model Development & Assessment
+    %% ======================================================================
+    subgraph phase3 [ ]
+        style phase3 fill:#E3F2FD,stroke:#90CAF9,stroke-width:2px,rx:10,ry:10
+
+        F{"<div style='font-size:24px;'>➗</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA SPLITTING</div><div style='font-size:12px; color:#555;'>Train/Test Sets</div>"}:::splitNode;
+        G["<div style='font-size:24px;'>🧠</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL TRAINING</div><div style='font-size:12px; color:#555;'>Random Forest</div>"]:::trainNode;
+        H["<div style='font-size:24px;'>✅</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL EVALUATION</div><div style='font-size:12px; color:#555;'>MSE, RMSE, R²</div>"]:::evalNode;
+
+        F -- "Train Data" --> G;
+        F -. "Test Data" .-> H; %% Dotted line with text
+        G -- Approval? --- H;  %% Text on arrow (example)
     end
 
-    subgraph "Phase 4: Results & Interpretation"
-        direction LR
-        I["📊<br/><b>Visualization</b><br/>Charts & Plots"]:::visualization
-        J["💡<br/><b>Analysis & Insights</b><br/>Interpretasi Hasil"]:::insights
-        H ~.-> I --> J
+    %% ======================================================================
+    %% Phase 4: Outcome Visualization & Knowledge Extraction
+    %% ======================================================================
+    subgraph phase4 [ ]
+        style phase4 fill:#FCE4EC,stroke:#F8BBD0,stroke-width:2px,rx:10,ry:10
+
+        I["<div style='font-size:24px;'>📊</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>VISUALIZATION</div><div style='font-size:12px; color:#555;'>Charts, Plots</div>"]:::vizNode;
+        J["<div style='font-size:24px;'>💡</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>ANALYSIS & INSIGHTS</div><div style='font-size:12px; color:#555;'>Interpretation</div>"]:::insightNode;
+
+        I .-> J; %% Dotted line connection
     end
 
-    %% ---- Menghubungkan Antar Subgraph ----
-    %% Mermaid tidak secara eksplisit menghubungkan subgraph, tapi aliran node antar subgraph sudah jelas
-    %% Jika perlu visualisasi panah antar 'phase', kita bisa pakai invisible node atau koneksi antar node ujungnya
-    %% Untuk menjaga kesederhanaan, biarkan koneksi node C ke D, E ke F, H ke I yang menyebrangi subgraph
+    %% ======================================================================
+    %% Inter-Phase Connections (Clearer Separation)
+    %% ======================================================================
+    C ~~~ D;  %% Wavy line connection from Storage to Preprocessing
+    E ==> F;  %% Thick arrow from Feature Eng. to Splitting
+    H ==> I;  %% Thick arrow from Evaluation to Visualization
 
-    %% Apply Link Styles (jika diinginkan untuk mempertegas)
-    linkStyle default stroke:#555,stroke-width:2px;
-    linkStyle 0 stroke-dasharray: 5 5; %% Contoh style untuk panah tertentu jika tahu indeksnya
+
+    %% ======================================================================
+    %% Optional: Global Link Styling
+    %% ======================================================================
+    linkStyle default stroke:#757575,stroke-width:1.5px,color:blue;
+    %% Example of styling specific links by index (0-based)
+    % linkStyle 0 stroke:red,stroke-width:3px;
+    % linkStyle 3 stroke-dasharray: 5 5;
