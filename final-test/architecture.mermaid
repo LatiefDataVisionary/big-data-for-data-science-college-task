@@ -59,23 +59,23 @@ graph LR
     end
 
     %% ======================================================================
-    %% Workflow Connections
+    %% Workflow Connections (REVISED FOR COMPATIBILITY)
     %% ======================================================================
-    A -- "Read" --> B;
-    B -- "Save" --> C;
+    A -- "Read" ==> B;
+    B -- "Save" ==> C;
     C -- "Load Raw Data" ==> D;
-    D -- "Cleaned Data" --> E;
+    D -- "Cleaned Data" ==> E;
     E -- "Engineered Features" ==> F;
     
-    F -- "Train Data" --> G;
-    F -. "Test Data" .-> H;
-    G -- "Trained Model" --> H;
+    F -- "Train Data" ==> G;
+    F -. "Test Data" .-> H; %% Dotted line remains for secondary flow
+    G -- "Trained Model" ==> H;
     
     H -- "Evaluation Results" ==> I;
-    I -- "Generate Insights" --> J;
+    I -- "Generate Insights" ==> J;
 
     %% ======================================================================
     %% Global Link Styling
     %% ======================================================================
     linkStyle default stroke:#616161,stroke-width:2px;
-    linkStyle 5,6,7 stroke-dasharray: 5 5, stroke:#00897B; %% Dashed link for test data
+    linkStyle 6 stroke-dasharray: 5 5, stroke:#00897B, stroke-width:2px; %% Style for dotted link
