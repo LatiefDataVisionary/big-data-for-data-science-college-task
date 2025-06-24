@@ -3,7 +3,7 @@ graph LR
     %% Global Style Definitions - More Robust & Customizable
     %% ======================================================================
     classDef defaultNode fill:#ECEFF1,stroke:#607D8B,stroke-width:2px,color:#37474F,border-radius:8px,padding:10px,font-family:Arial;
-    classDef titleText font-size:16px,font-weight:bold,fill:transparent,stroke:none; %% For separate title nodes
+    %% classDef titleText font-size:16px,font-weight:bold,fill:transparent,stroke:none; %% For separate title nodes (REMOVED FOR DEBUGGING)
 
     classDef phaseBox fill:#FAFAFA,stroke:#BDBDBD,stroke-width:1.5px,rx:10,ry:10; %% For subgraph styling
 
@@ -31,8 +31,8 @@ graph LR
         B["<div style='font-size:24px;'>📥</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA INGESTION</div><div style='font-size:12px; color:#555;'>Python, Pandas `read_csv`</div>"]:::ingestNode;
         C["<div style='font-size:24px;'>🗄️</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA STORAGE</div><div style='font-size:12px; color:#555;'>Local Disk (Sim. HDFS)</div>"]:::storeNode;
 
-        A --o B; %% Connection with small circle
-        B --x C; %% Connection with cross
+        A --o B; 
+        B --x C; 
     end
 
 
@@ -45,7 +45,7 @@ graph LR
         D["<div style='font-size:24px;'>🧹</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>PREPROCESSING</div><div style='font-size:12px; color:#555;'>Cleaning, Transformation</div>"]:::preprocessNode;
         E["<div style='font-size:24px;'>✨</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>FEATURE ENGINEERING</div><div style='font-size:12px; color:#555;'>`trip_duration`, Time Features</div>"]:::featureNode;
 
-        D ==> E; %% Thick arrow connection
+        D ==> E; 
     end
 
     %% ======================================================================
@@ -56,11 +56,11 @@ graph LR
 
         F{"<div style='font-size:24px;'>➗</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>DATA SPLITTING</div><div style='font-size:12px; color:#555;'>Train/Test Sets</div>"}:::splitNode;
         G["<div style='font-size:24px;'>🧠</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL TRAINING</div><div style='font-size:12px; color:#555;'>Random Forest</div>"]:::trainNode;
-        H["<div style='font-size:24px;'>✅</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL EVALUATION</div><div style='font-size:12px; color:#555;'>MSE, RMSE, R²</div>"]:::evalNode;
+        H["<div style'font-size:24px;'>✅</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>MODEL EVALUATION</div><div style='font-size:12px; color:#555;'>MSE, RMSE, R²</div>"]:::evalNode;
 
         F -- "Train Data" --> G;
-        F -. "Test Data" .-> H; %% Dotted line with text
-        G -- Approval? --- H;  %% Text on arrow (example)
+        F -. "Test Data" .-> H; 
+        G -- "Approval?" --- H;  
     end
 
     %% ======================================================================
@@ -72,21 +72,18 @@ graph LR
         I["<div style='font-size:24px;'>📊</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>VISUALIZATION</div><div style='font-size:12px; color:#555;'>Charts, Plots</div>"]:::vizNode;
         J["<div style='font-size:24px;'>💡</div><div style='font-weight:bold; font-size:15px; margin-top:5px;'>ANALYSIS & INSIGHTS</div><div style='font-size:12px; color:#555;'>Interpretation</div>"]:::insightNode;
 
-        I .-> J; %% Dotted line connection
+        I .-> J; 
     end
 
     %% ======================================================================
     %% Inter-Phase Connections (Clearer Separation)
     %% ======================================================================
-    C ~~~ D;  %% Wavy line connection from Storage to Preprocessing
-    E ==> F;  %% Thick arrow from Feature Eng. to Splitting
-    H ==> I;  %% Thick arrow from Evaluation to Visualization
+    C ~~~ D;  
+    E ==> F;  
+    H ==> I;  
 
 
     %% ======================================================================
     %% Optional: Global Link Styling
     %% ======================================================================
     linkStyle default stroke:#757575,stroke-width:1.5px,color:blue;
-    %% Example of styling specific links by index (0-based)
-    % linkStyle 0 stroke:red,stroke-width:3px;
-    % linkStyle 3 stroke-dasharray: 5 5;
